@@ -98,7 +98,7 @@
         {% if item.tty is defined %}--tty={{ item.tty }}{% endif %}
         {% if item.network is defined %}--network={{ item.network }}{% endif %}
         {% if item.etc_hosts is defined %}{% for i,k in item.etc_hosts.items() %}--add-host {{ i }}:{{ k }} {% endfor %}{% endif %}
-        {% if item.hostname is defined %}--hostname={{ item.hostname }}{% endif %}
+        {% if item.hostname is defined %}--hostname={{ item.hostname }}{% elif item.name is defined %}--hostname={{ item.name }}{% endif %}
         {{ item.pre_build_image | default(false) | ternary('', 'molecule_local/') }}{{ item.image }}
         {{ (command_directives_dict | default({}))[item.name] | default('') }}
       register: server
